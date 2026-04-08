@@ -1,0 +1,21 @@
+{
+    "name": "ai-humanizer-saas",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@supabase/supabase-js": "^2.102.1",
+        "axios": "^1.14.0",
+        "body-parser": "^2.2.2",
+        "ejs": "^5.0.1",
+        "express": "^5.2.1",
+        "stripe": "^22.0.1"
+    },
+    "description": ""
+}
