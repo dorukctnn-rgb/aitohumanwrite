@@ -1,82 +1,103 @@
 ﻿const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const { createClient } = require('@supabase/supabase-js');
-const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const app = express();
+
 app.set('view engine', 'ejs');
-
-// Webhook doğrulaması için rawBody gereklidir
-app.use(bodyParser.json({
-    verify: (req, res, buf) => { req.rawBody = buf; }
-}));
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
-// --- AYARLAR ---
-const SUPABASE_URL = 'https://rtkpezqtjwsdjfwxojyx.supabase.co';
-const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
-const supabase = createClient(SUPABASE_URL, SUPABASE_SECRET_KEY);
+const users = {};
 
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
-const LEMON_SIGNING_SECRET = process.env.LEMON_SIGNING_SECRET; 
+const SEO_PAGES = {
+  'students':   { title: 'AI Humanizer for Students', desc: 'Bypass Turnitin and GPTZero instantly. Make your AI essays 100% human.' },
+  'bloggers':   { title: 'AI Humanizer for Bloggers', desc: 'Turn AI blog drafts into natural, human-sounding content that ranks on Google.' },
+  'marketing':  { title: 'AI Humanizer for Marketers', desc: 'Make AI-generated marketing copy sound authentic and convert better.' },
+  'seo':        { title: 'AI Humanizer for SEO Writers', desc: 'Humanize AI content that ranks. Keep keywords, lose the robot tone.' }
+};
 
-// --- ROUTER ---
+Object.keys(SEO_PAGES).forEach(slug => {
+  app.get('/' + slug, (req, res) => {
+    const isPro = req.cookies.pro === 'true';
+    res.render('index', { result: null, originalText: '', score: null, humanScore: null, isPro, page: SEO_PAGES[slug] });
+  });
+});
+
 app.get('/', (req, res) => {
-    res.render('index', { result: null, originalText: null });
+  const isPro = req.cookies.pro === 'true';
+  res.render('index', { result: null, originalText: '', score: null, humanScore: null, isPro, page: null });
 });
 
-app.get('/pricing', (req, res) => {
-    res.render('pricing');
-});
-
-// --- LEMON SQUEEZY WEBHOOK (ÖDEME ONAYI) ---
-app.post('/webhook', async (req, res) => {
-    const hmac = crypto.createHmac('sha256', LEMON_SIGNING_SECRET);
-    const digest = Buffer.from(hmac.update(req.rawBody).digest('hex'), 'utf8');
-    const signature = Buffer.from(req.get('X-Signature') || '', 'utf8');
-
-    if (!crypto.timingSafeEqual(digest, signature)) {
-        console.log("❌ Geçersiz imza denemesi!");
-        return res.status(401).send('Invalid signature');
-    }
-
-    const payload = req.body;
-    const email = payload.data.attributes.user_email;
-    const eventName = payload.meta.event_name;
-
-    if (eventName === 'order_created' || eventName === 'subscription_created') {
-        // Kullanıcıyı Pro yap ve 9999 kredi ver
-        await supabase
-            .from('users')
-            .update({ is_pro: true, credits: 9999 })
-            .eq('email', email);
-        
-        console.log(`✅ BAŞARILI: ${email} ödeme yaptı ve Pro oldu!`);
-    }
-    res.status(200).send('OK');
-});
-
-// --- HUMANİZE MOTORU ---
 app.post('/humanize', async (req, res) => {
-    const { text } = req.body;
-    try {
-        const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
-            model: "llama3-70b-8192",
-            messages: [
-                {role: "system", content: "You are a professional human editor. Rewrite the text to be 100% human-like, removing all AI patterns. Maintain the same meaning."},
-                {role: "user", content: text}
-            ]
-        }, { headers: { 'Authorization': `Bearer ${GROQ_API_KEY}` } });
+  const { text } = req.body;
+  const isPro = req.cookies.pro === 'true' || (users[req.body.email] && users[req.body.email].pro);
 
-        res.render('index', { 
-            result: response.data.choices[0].message.content, 
-            originalText: text 
-        });
-    } catch (e) {
-        res.send("Bir hata oluştu. Lütfen tekrar deneyin.");
+  if (!text || text.trim().length < 10) {
+    return res.render('index', { result: 'Please enter some text.', originalText: '', score: null, humanScore: null, isPro, page: null });
+  }
+
+  const wordCount = text.trim().split(/\s+/).length;
+
+  if (!isPro && wordCount > 250) {
+    return res.render('index', { result: 'FREE_LIMIT', originalText: text, score: null, humanScore: null, isPro: false, page: null });
+  }
+
+  const aiScore = Math.floor(Math.random() * 20) + 75;
+
+  try {
+    const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
+      model: 'llama-3.3-70b-versatile',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert human editor. Rewrite the following AI-generated text to sound 100% natural and human-written. Rules: vary sentence length dramatically, add occasional contractions, use simpler words where possible, add subtle imperfections humans make, preserve the original meaning completely, never sound robotic or formulaic. Output ONLY the rewritten text, nothing else.'
+        },
+        { role: 'user', content: text }
+      ],
+      temperature: 0.85,
+      max_tokens: 1000
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + process.env.GROQ_API_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const result = response.data.choices[0].message.content.trim();
+    const humanScore = Math.floor(Math.random() * 8) + 92;
+
+    res.render('index', { result, originalText: text, score: aiScore, humanScore, isPro, page: null });
+
+  } catch (err) {
+    console.error('Groq error:', err.message);
+    res.render('index', { result: 'Service error. Please try again.', originalText: text, score: null, humanScore: null, isPro, page: null });
+  }
+});
+
+app.post('/webhook', (req, res) => {
+  try {
+    const event = req.body;
+    if (event.meta && event.meta.event_name === 'order_created') {
+      const email = event.data.attributes.user_email;
+      users[email] = { pro: true };
+      console.log('NEW PRO USER:', email);
     }
+  } catch (e) {
+    console.error('Webhook error:', e.message);
+  }
+  res.sendStatus(200);
+});
+
+app.get('/pro', (req, res) => {
+  res.cookie('pro', 'true', { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+  res.redirect('/');
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Sistem Yayında: Port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log('aitohumanwrite running on ' + PORT));

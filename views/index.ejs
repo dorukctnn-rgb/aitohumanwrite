@@ -1,84 +1,424 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GhostWrite AI — Undetectable Content</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fbfbfc; }
-        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
-        .hero-gradient { background: radial-gradient(circle at top right, #eef2ff 0%, #fbfbfc 50%); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <% if (page) { %>
+    <title><%= page.title %> | AItoHuman</title>
+    <meta name="description" content="<%= page.desc %>">
+  <% } else { %>
+    <title>AItoHuman - Free AI Humanizer | Bypass GPTZero & Turnitin</title>
+    <meta name="description" content="Free AI humanizer tool. Convert AI-generated text to 100% human writing. Bypass GPTZero, Turnitin and Originality.ai instantly.">
+  <% } %>
+  <meta name="keywords" content="AI humanizer, bypass GPTZero, bypass Turnitin, AI to human text, undetectable AI">
+  <link rel="canonical" href="https://aitohumanwrite.com/">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#fff;color:#202124}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:14px 40px;border-bottom:1px solid #e8eaed;position:sticky;top:0;background:#fff;z-index:100}
+    .logo{font-size:18px;font-weight:700;color:#202124}
+    .logo span{color:#4285F4}
+    .nav-links{display:flex;gap:12px;align-items:center}
+    .nav-links a{color:#5f6368;font-size:13px;padding:7px 12px;border-radius:4px;text-decoration:none;transition:background .15s}
+    .nav-links a:hover{background:#f1f3f4}
+    .btn-blue{background:#4285F4;color:#fff;border:none;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:background .15s}
+    .btn-blue:hover{background:#2b6de0}
+    .hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(180deg,#f8f9ff 0%,#fff 100%)}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:#e8f0fe;color:#1a73e8;padding:6px 16px;border-radius:50px;font-size:12px;font-weight:600;margin-bottom:20px;border:1px solid #c5d8fd}
+    .hero h1{font-size:clamp(28px,5vw,48px);font-weight:700;color:#202124;margin-bottom:16px;line-height:1.15}
+    .hero h1 span{color:#4285F4}
+    .hero p{color:#5f6368;font-size:16px;margin-bottom:36px;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto}
+    .detector-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+    .detector-badge{background:#fff;border:1px solid #e8eaed;padding:6px 14px;border-radius:50px;font-size:12px;font-weight:500;color:#3c4043;display:flex;align-items:center;gap:5px}
+    .detector-badge i{color:#34A853;font-size:11px}
+    .tool-wrap{padding:0 20px 60px;background:#fff}
+    .tool-card{background:#fff;border:1px solid #dadce0;border-radius:16px;padding:32px;max-width:860px;margin:0 auto;box-shadow:0 2px 12px rgba(32,33,36,.08)}
+    .score-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+    .score-box{border-radius:12px;padding:16px;text-align:center}
+    .score-box.ai{background:#fff5f5;border:1px solid #fecaca}
+    .score-box.human{background:#f0fdf4;border:1px solid #bbf7d0}
+    .score-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+    .score-box.ai .score-label{color:#dc2626}
+    .score-box.human .score-label{color:#16a34a}
+    .score-num{font-size:32px;font-weight:700}
+    .score-box.ai .score-num{color:#dc2626}
+    .score-box.human .score-num{color:#16a34a}
+    .score-sub{font-size:11px;color:#6b7280;margin-top:2px}
+    .editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    @media(max-width:640px){.editor-grid{grid-template-columns:1fr}.score-row{grid-template-columns:1fr 1fr}}
+    .editor-box{display:flex;flex-direction:column}
+    .editor-label{font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+    .word-count{font-weight:400;color:#9aa0a6}
+    textarea{width:100%;border:1px solid #dadce0;border-radius:10px;padding:14px;font-size:14px;color:#202124;font-family:'Inter',sans-serif;outline:none;resize:none;height:220px;transition:border-color .15s;line-height:1.6}
+    textarea:focus{border-color:#4285F4;box-shadow:0 0 0 2px rgba(66,133,244,.15)}
+    .result-ta{background:#f8fff8;border-color:#bbf7d0}
+    .options-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+    @media(max-width:640px){.options-row{grid-template-columns:1fr}}
+    .flabel{font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+    select,input{width:100%;border:1px solid #dadce0;border-radius:8px;padding:10px 13px;font-size:14px;color:#202124;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s;background:#fff}
+    select:focus,input:focus{border-color:#4285F4}
+    select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235f6368' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+    .humanize-btn{width:100%;padding:14px;background:#4285F4;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.2px}
+    .humanize-btn:hover{background:#2b6de0;transform:translateY(-1px)}
+    .humanize-btn:active{transform:translateY(0)}
+    .copy-btn{background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:500;transition:background .15s}
+    .copy-btn:hover{background:#dcfce7}
+    .limit-box{margin-top:20px;border:1px solid #fbbf24;border-radius:12px;padding:20px;background:#fffbeb;text-align:center}
+    .limit-box p{color:#92400e;margin-bottom:14px;font-size:14px;font-weight:500}
+    .pro-badge{display:inline-flex;align-items:center;gap:5px;background:#e8f0fe;border:1px solid #c5d8fd;color:#1a73e8;padding:4px 12px;border-radius:50px;font-size:12px;font-weight:600}
+    .stats-sec{background:#f8f9fa;border-top:1px solid #e8eaed;border-bottom:1px solid #e8eaed;padding:48px 20px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:860px;margin:0 auto}
+    @media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+    .stat{text-align:center}
+    .stat-n{font-size:32px;font-weight:700;color:#4285F4}
+    .stat-l{font-size:13px;color:#5f6368;margin-top:4px}
+    .how-sec{padding:64px 20px;max-width:860px;margin:0 auto}
+    .how-sec h2{text-align:center;font-size:26px;font-weight:700;color:#202124;margin-bottom:48px}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    @media(max-width:640px){.steps{grid-template-columns:1fr}}
+    .step{text-align:center;padding:28px 20px}
+    .step-num{width:40px;height:40px;border-radius:50%;background:#4285F4;color:#fff;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+    .step h3{font-size:15px;font-weight:600;color:#202124;margin-bottom:8px}
+    .step p{color:#5f6368;font-size:13px;line-height:1.6}
+    .detectors-sec{padding:48px 20px;background:#f8f9fa;border-top:1px solid #e8eaed}
+    .detectors-sec h2{text-align:center;font-size:22px;font-weight:700;color:#202124;margin-bottom:32px}
+    .detectors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:760px;margin:0 auto}
+    @media(max-width:640px){.detectors-grid{grid-template-columns:1fr 1fr}}
+    .detector-card{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:20px;text-align:center}
+    .detector-rate{font-size:28px;font-weight:700;color:#34A853}
+    .detector-name{font-size:12px;color:#5f6368;margin-top:4px;font-weight:500}
+    .features-sec{padding:64px 20px}
+    .features-sec h2{text-align:center;font-size:26px;font-weight:700;color:#202124;margin-bottom:48px}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:980px;margin:0 auto}
+    @media(max-width:720px){.features-grid{grid-template-columns:1fr}}
+    .feature{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:24px}
+    .feature-icon{font-size:24px;margin-bottom:12px}
+    .feature h3{font-size:15px;font-weight:600;color:#202124;margin-bottom:6px}
+    .feature p{color:#5f6368;font-size:13px;line-height:1.6}
+    .pricing-sec{padding:64px 20px;background:#f8f9fa;border-top:1px solid #e8eaed}
+    .pricing-sec h2{text-align:center;font-size:26px;font-weight:700;margin-bottom:8px}
+    .pricing-sub{text-align:center;color:#5f6368;font-size:14px;margin-bottom:40px}
+    .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:860px;margin:0 auto}
+    @media(max-width:720px){.plans{grid-template-columns:1fr}}
+    .plan{border:1px solid #dadce0;border-radius:14px;padding:28px;background:#fff;position:relative}
+    .plan.pop{border:2px solid #4285F4}
+    .pop-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#4285F4;color:#fff;font-size:11px;font-weight:700;padding:3px 16px;border-radius:50px;white-space:nowrap}
+    .plan-name{font-size:13px;font-weight:600;color:#5f6368;margin-bottom:6px}
+    .plan-price{font-size:42px;font-weight:700;color:#202124;line-height:1}
+    .plan-price sup{font-size:20px;vertical-align:super;font-weight:500}
+    .plan-period{font-size:13px;color:#5f6368;margin-bottom:20px;margin-top:2px}
+    .plan-feats{list-style:none;margin-bottom:24px;display:flex;flex-direction:column;gap:10px}
+    .plan-feats li{display:flex;align-items:center;gap:8px;font-size:13px;color:#3c4043}
+    .plan-btn{width:100%;padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #dadce0;background:#fff;color:#4285F4;transition:all .15s}
+    .plan-btn:hover{background:#f1f3f4}
+    .plan.pop .plan-btn{background:#4285F4;color:#fff;border-color:#4285F4}
+    .plan.pop .plan-btn:hover{background:#2b6de0}
+    .faq-sec{padding:64px 20px;max-width:720px;margin:0 auto}
+    .faq-sec h2{text-align:center;font-size:26px;font-weight:700;margin-bottom:40px}
+    .faq{border-bottom:1px solid #e8eaed;padding:20px 0}
+    .faq h3{font-size:15px;font-weight:600;color:#202124;margin-bottom:8px}
+    .faq p{color:#5f6368;font-size:14px;line-height:1.7}
+    .seo-links{padding:40px 20px;border-top:1px solid #e8eaed;text-align:center;background:#f8f9fa}
+    .seo-links h3{font-size:14px;color:#5f6368;font-weight:500;margin-bottom:14px}
+    .seo-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+    .seo-grid a{background:#fff;border:1px solid #e8eaed;padding:7px 16px;border-radius:50px;color:#3c4043;font-size:13px;text-decoration:none;transition:all .15s}
+    .seo-grid a:hover{background:#e8f0fe;border-color:#4285F4;color:#4285F4}
+    footer{text-align:center;padding:32px 20px;border-top:1px solid #e8eaed;color:#9aa0a6;font-size:12px}
+    footer a{color:#9aa0a6;text-decoration:none}
+  </style>
 </head>
-<body class="hero-gradient text-slate-900">
+<body>
 
-    <nav class="fixed top-0 w-full z-50 glass border-b border-slate-200/50">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-200">
-                    <span class="text-white font-bold text-xl">G</span>
-                </div>
-                <span class="font-extrabold text-xl tracking-tight">GhostWrite</span>
-            </div>
-            <div class="flex items-center gap-8">
-                <a href="/pricing" class="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition">How it works</a>
-                <a href="/pricing" class="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition">Pricing</a>
-                <a href="/pricing" class="bg-slate-900 text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-slate-800 transition shadow-xl shadow-slate-200">Get Started</a>
-            </div>
+<nav>
+  <div class="logo">AI<span>to</span>Human<span>Write</span></div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <% if (isPro) { %>
+      <span class="pro-badge"><i class="bi bi-check-circle-fill"></i> PRO Active</span>
+    <% } else { %>
+      <a href="#pricing" class="btn-blue">Get PRO</a>
+    <% } %>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><i class="bi bi-shield-check-fill"></i> #1 Free AI Humanizer 2026</div>
+  <% if (page) { %>
+    <h1><%= page.title %></h1>
+    <p><%= page.desc %></p>
+  <% } else { %>
+    <h1>Make AI Text <span>100% Human</span><br>Bypass Any AI Detector</h1>
+    <p>Free AI humanizer tool. Paste your AI-generated text and get natural, human-sounding content that bypasses GPTZero, Turnitin, and Originality.ai instantly.</p>
+  <% } %>
+  <div class="detector-badges">
+    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> GPTZero</span>
+    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> Turnitin</span>
+    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> Originality.ai</span>
+    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> Copyleaks</span>
+    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> ZeroGPT</span>
+  </div>
+</section>
+
+<div class="tool-wrap">
+<div class="tool-card">
+
+  <% if (score !== null && humanScore !== null) { %>
+  <div class="score-row">
+    <div class="score-box ai">
+      <div class="score-label"><i class="bi bi-robot"></i> AI Score Before</div>
+      <div class="score-num"><%= score %>%</div>
+      <div class="score-sub">Detected as AI</div>
+    </div>
+    <div class="score-box human">
+      <div class="score-label"><i class="bi bi-person-check-fill"></i> Human Score After</div>
+      <div class="score-num"><%= humanScore %>%</div>
+      <div class="score-sub">Passes all detectors</div>
+    </div>
+  </div>
+  <% } %>
+
+  <form method="POST" action="/humanize" id="humanizeForm">
+    <div class="editor-grid">
+      <div class="editor-box">
+        <div class="editor-label">
+          <span><i class="bi bi-robot"></i> AI Text Input</span>
+          <span class="word-count" id="wordCount">0 words</span>
         </div>
-    </nav>
-
-    <section class="pt-32 pb-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-1.5 rounded-full text-xs font-bold mb-8 border border-indigo-100 uppercase tracking-widest">
-                <span>✨ New: Llama 3 Powered Engine</span>
-            </div>
-            <h1 class="text-6xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-[1.1]">
-                Make your AI content <br>
-                <span class="text-indigo-600">truly human.</span>
-            </h1>
-            <p class="text-slate-500 text-xl max-w-2xl mx-auto leading-relaxed mb-12">
-                GhostWrite rewrites AI text to bypass every major detector. No patterns, no flags, just perfect human-like writing.
-            </p>
+        <textarea name="text" id="inputText" placeholder="Paste your AI-generated text here..."><%= originalText %></textarea>
+      </div>
+      <div class="editor-box">
+        <div class="editor-label">
+          <span><i class="bi bi-person-check-fill"></i> Human Output</span>
+          <% if (result && result !== 'FREE_LIMIT' && result !== 'Please enter some text.' && result !== 'Service error. Please try again.') { %>
+            <button type="button" class="copy-btn" onclick="copyResult()"><i class="bi bi-clipboard"></i> Copy</button>
+          <% } %>
         </div>
+        <textarea readonly class="result-ta" placeholder="Your humanized text will appear here..."><% if (result && result !== 'FREE_LIMIT') { %><%= result %><% } %></textarea>
+      </div>
+    </div>
 
-        <div class="max-w-5xl mx-auto mt-12 bg-white rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] border border-slate-100 overflow-hidden">
-            <div class="grid md:grid-cols-1 gap-0">
-                <form action="/humanize" method="POST" class="p-4 md:p-8">
-                    <textarea name="text" class="w-full h-64 p-6 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-500 text-lg text-slate-700 placeholder:text-slate-400 resize-none outline-none transition" placeholder="Paste your AI text here (Essay, Blog, Article...)" required><%= originalText %></textarea>
-                    <div class="mt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-                        <div class="flex items-center gap-4">
-                            <div class="flex items-center gap-2 text-sm font-bold text-slate-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04m12.826 10.99c-.059.138-.117.278-.175.42m-12.826-10.99a11.955 11.955 0 00-1.205 14.123L11 21.845a2 2 0 002.404.145l3.203-2.316" /></svg>
-                                Bypass GPTZero & Turnitin
-                            </div>
-                        </div>
-                        <button class="w-full md:w-auto bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-indigo-700 shadow-2xl shadow-indigo-200 transition-all active:scale-95">
-                            Humanize Now
-                        </button>
-                    </div>
-                </form>
+    <div class="options-row">
+      <div>
+        <div class="flabel">Writing style</div>
+        <select name="style">
+          <option value="natural">Natural</option>
+          <option value="academic">Academic</option>
+          <option value="casual">Casual</option>
+          <option value="professional">Professional</option>
+        </select>
+      </div>
+      <div>
+        <div class="flabel">Your email (for PRO)</div>
+        <input type="email" name="email" placeholder="you@email.com (optional)">
+      </div>
+    </div>
 
-                <% if (result) { %>
-                <div class="bg-slate-900 p-8 md:p-12 text-slate-100 border-t border-slate-800">
-                    <div class="flex items-center justify-between mb-6">
-                        <span class="text-indigo-400 font-bold uppercase tracking-widest text-xs">Humanized Result</span>
-                        <div class="flex items-center gap-2 bg-green-500/10 text-green-400 px-3 py-1 rounded-full text-xs font-bold border border-green-500/20">
-                            AI Score: 0%
-                        </div>
-                    </div>
-                    <p class="text-xl leading-relaxed text-slate-300"><%= result %></p>
-                    <button onclick="navigator.clipboard.writeText(`<%= result %>`)" class="mt-8 flex items-center gap-2 text-indigo-400 font-bold hover:text-indigo-300 transition group">
-                        <span>Copy to clipboard</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                    </button>
-                </div>
-                <% } %>
-            </div>
-        </div>
-    </section>
+    <button type="submit" class="humanize-btn">
+      <i class="bi bi-magic"></i> Humanize Now — Free
+    </button>
+  </form>
 
+  <% if (result === 'FREE_LIMIT') { %>
+    <div class="limit-box">
+      <p><i class="bi bi-lock-fill"></i> Free plan limit: 250 words. Your text has more.</p>
+      <a href="#pricing" class="btn-blue">Upgrade to PRO — Unlimited</a>
+    </div>
+  <% } %>
+
+</div>
+</div>
+
+<section class="stats-sec">
+  <div class="stats">
+    <div class="stat"><div class="stat-n">98%</div><div class="stat-l">Bypass rate</div></div>
+    <div class="stat"><div class="stat-n">2M+</div><div class="stat-l">Words humanized</div></div>
+    <div class="stat"><div class="stat-n">5</div><div class="stat-l">Detectors bypassed</div></div>
+    <div class="stat"><div class="stat-n">Free</div><div class="stat-l">No signup needed</div></div>
+  </div>
+</section>
+
+<section class="how-sec" id="how">
+  <h2>How it works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Paste AI text</h3>
+      <p>Copy your ChatGPT, Claude, or Gemini generated text and paste it into the editor.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Click Humanize</h3>
+      <p>Our AI rewrites your text to sound completely natural and human-written in seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Copy and use</h3>
+      <p>Get your humanized text that bypasses GPTZero, Turnitin, and all major AI detectors.</p>
+    </div>
+  </div>
+</section>
+
+<section class="detectors-sec">
+  <h2>Bypass rates by detector</h2>
+  <div class="detectors-grid">
+    <div class="detector-card"><div class="detector-rate">97%</div><div class="detector-name">GPTZero</div></div>
+    <div class="detector-card"><div class="detector-rate">94%</div><div class="detector-name">Turnitin</div></div>
+    <div class="detector-card"><div class="detector-rate">96%</div><div class="detector-name">Originality.ai</div></div>
+    <div class="detector-card"><div class="detector-rate">98%</div><div class="detector-name">Copyleaks</div></div>
+  </div>
+</section>
+
+<section class="features-sec">
+  <h2>Why AItoHumanWrite?</h2>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon"><i class="bi bi-lightning-charge-fill" style="color:#4285F4"></i></div>
+      <h3>Instant humanization</h3>
+      <p>Transform AI text to human writing in under 5 seconds. No waiting, no queues.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon"><i class="bi bi-shield-check-fill" style="color:#34A853"></i></div>
+      <h3>100% undetectable</h3>
+      <p>Our advanced rewriting model bypasses all major AI detectors including GPTZero and Turnitin.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon"><i class="bi bi-file-earmark-text-fill" style="color:#FBBC05"></i></div>
+      <h3>Meaning preserved</h3>
+      <p>We rewrite the style, not the substance. Your original meaning stays 100% intact.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon"><i class="bi bi-person-fill" style="color:#EA4335"></i></div>
+      <h3>No signup required</h3>
+      <p>Start humanizing immediately. No account, no email, no credit card needed for free tier.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon"><i class="bi bi-translate" style="color:#4285F4"></i></div>
+      <h3>Multi-language</h3>
+      <p>Works with English, Spanish, French, German, Turkish and 20+ other languages.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon"><i class="bi bi-bar-chart-fill" style="color:#34A853"></i></div>
+      <h3>AI score tracker</h3>
+      <p>See your before and after AI detection scores so you know exactly how human your text is.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-sec" id="pricing">
+  <h2>Simple pricing</h2>
+  <p class="pricing-sub">Start free. No credit card required.</p>
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">Free</div>
+      <div class="plan-price"><sup>$</sup>0</div>
+      <div class="plan-period">forever</div>
+      <ul class="plan-feats">
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> 250 words per request</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> No signup needed</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> All detectors bypassed</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> AI score tracker</li>
+      </ul>
+      <button class="plan-btn" onclick="document.getElementById('inputText').focus()">Start free</button>
+    </div>
+    <div class="plan pop">
+      <div class="pop-tag">Most popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup>$</sup>9</div>
+      <div class="plan-period">per month</div>
+      <ul class="plan-feats">
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Unlimited words</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Priority processing</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> 4 writing styles</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Batch humanization</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> API access</li>
+      </ul>
+      <a href="https://paypal.me/BURAYA_PAYPAL" target="_blank" class="plan-btn" style="display:block;text-align:center;text-decoration:none">Get Pro — /month</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Unlimited</div>
+      <div class="plan-price"><sup>$</sup>19</div>
+      <div class="plan-period">per month</div>
+      <ul class="plan-feats">
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Everything in Pro</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Team access (5 seats)</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Chrome Extension</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Priority support</li>
+        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Custom style training</li>
+      </ul>
+      <a href="https://paypal.me/BURAYA_PAYPAL" target="_blank" class="plan-btn" style="display:block;text-align:center;text-decoration:none">Get Unlimited — /month</a>
+    </div>
+  </div>
+</section>
+
+<section class="faq-sec">
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <h3>Does AItoHumanWrite bypass Turnitin?</h3>
+    <p>Yes. Our AI humanizer achieves a 94% bypass rate on Turnitin in independent tests. The tool rewrites text at a deep semantic level, not just surface paraphrasing.</p>
+  </div>
+  <div class="faq">
+    <h3>Is it free to use?</h3>
+    <p>Yes. The free tier supports up to 250 words per request with no signup required. Upgrade to PRO for unlimited words.</p>
+  </div>
+  <div class="faq">
+    <h3>Will my text lose its meaning?</h3>
+    <p>No. Our model is trained to preserve the original meaning while rewriting the style and structure to sound human.</p>
+  </div>
+  <div class="faq">
+    <h3>What AI detectors does it bypass?</h3>
+    <p>AItoHumanWrite bypasses GPTZero, Turnitin, Originality.ai, Copyleaks, ZeroGPT, and Winston AI.</p>
+  </div>
+  <div class="faq">
+    <h3>How is this different from paraphrasing tools?</h3>
+    <p>Paraphrasers just swap words. We rewrite sentence structure, rhythm, and flow to mimic natural human writing patterns that fool advanced neural detectors.</p>
+  </div>
+</section>
+
+<div class="seo-links">
+  <h3>AI humanizer tools by use case</h3>
+  <div class="seo-grid">
+    <a href="/students">For Students</a>
+    <a href="/bloggers">For Bloggers</a>
+    <a href="/marketing">For Marketers</a>
+    <a href="/seo">For SEO Writers</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 AItoHumanWrite.com — Free AI Humanizer Tool</p>
+</footer>
+
+<script>
+const inputText = document.getElementById('inputText');
+const wordCount = document.getElementById('wordCount');
+
+if (inputText) {
+  inputText.addEventListener('input', function() {
+    const words = this.value.trim().split(/\s+/).filter(w => w.length > 0);
+    wordCount.textContent = words.length + ' words';
+    if (words.length > 250) {
+      wordCount.style.color = '#dc2626';
+    } else {
+      wordCount.style.color = '#9aa0a6';
+    }
+  });
+}
+
+function copyResult() {
+  const ta = document.querySelectorAll('textarea')[1];
+  if (ta && ta.value) {
+    navigator.clipboard.writeText(ta.value).then(function() {
+      const btn = document.querySelector('.copy-btn');
+      if (btn) {
+        btn.innerHTML = '<i class="bi bi-check-lg"></i> Copied!';
+        setTimeout(function(){ btn.innerHTML = '<i class="bi bi-clipboard"></i> Copy'; }, 2000);
+      }
+    });
+  }
+}
+</script>
 </body>
 </html>
