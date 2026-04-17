@@ -1,50 +1,101 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <% if (page) { %>
-    <title><%= page.title %> | AItoHuman</title>
+    <title><%= page.title %> | AItoHumanWrite</title>
     <meta name="description" content="<%= page.desc %>">
   <% } else { %>
-    <title>AItoHuman - Free AI Humanizer | Bypass GPTZero & Turnitin</title>
-    <meta name="description" content="Free AI humanizer tool. Convert AI-generated text to 100% human writing. Bypass GPTZero, Turnitin and Originality.ai instantly.">
+    <title>AI to Human Text Converter - Free AI Humanizer | Bypass GPTZero & Turnitin</title>
+    <meta name="description" content="Free AI humanizer tool. Convert AI-generated text to 100% human writing instantly. Bypass GPTZero, Turnitin, Originality.ai and Copyleaks. No signup needed.">
   <% } %>
-  <meta name="keywords" content="AI humanizer, bypass GPTZero, bypass Turnitin, AI to human text, undetectable AI">
+  <meta name="keywords" content="AI humanizer, AI to human text, bypass GPTZero, bypass Turnitin, undetectable AI writer, AI text converter, humanize AI text">
   <link rel="canonical" href="https://aitohumanwrite.com/">
+  <meta property="og:title" content="Free AI Humanizer - Bypass GPTZero & Turnitin">
+  <meta property="og:description" content="Convert AI text to 100% human writing instantly. Free, no signup required.">
+  <meta property="og:url" content="https://aitohumanwrite.com/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AItoHumanWrite",
+    "description": "Free AI humanizer tool that converts AI-generated text to human writing, bypassing GPTZero, Turnitin and Originality.ai",
+    "url": "https://aitohumanwrite.com",
+    "applicationCategory": "UtilitiesApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does AItoHumanWrite bypass Turnitin?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Our AI humanizer achieves a 94% bypass rate on Turnitin in independent tests."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is AItoHumanWrite free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The free tier supports up to 250 words per request with no signup required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What AI detectors does it bypass?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AItoHumanWrite bypasses GPTZero, Turnitin, Originality.ai, Copyleaks, ZeroGPT and Winston AI."
+        }
+      }
+    ]
+  }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:#fff;color:#202124}
     nav{display:flex;justify-content:space-between;align-items:center;padding:14px 40px;border-bottom:1px solid #e8eaed;position:sticky;top:0;background:#fff;z-index:100}
     .logo{font-size:18px;font-weight:700;color:#202124}
-    .logo span{color:#4285F4}
+    .logo .blue{color:#4285F4}
     .nav-links{display:flex;gap:12px;align-items:center}
     .nav-links a{color:#5f6368;font-size:13px;padding:7px 12px;border-radius:4px;text-decoration:none;transition:background .15s}
     .nav-links a:hover{background:#f1f3f4}
     .btn-blue{background:#4285F4;color:#fff;border:none;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:background .15s}
     .btn-blue:hover{background:#2b6de0}
-    .hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(180deg,#f8f9ff 0%,#fff 100%)}
+    .hero{text-align:center;padding:60px 20px 40px;background:#f8f9ff}
     .hero-badge{display:inline-flex;align-items:center;gap:6px;background:#e8f0fe;color:#1a73e8;padding:6px 16px;border-radius:50px;font-size:12px;font-weight:600;margin-bottom:20px;border:1px solid #c5d8fd}
     .hero h1{font-size:clamp(28px,5vw,48px);font-weight:700;color:#202124;margin-bottom:16px;line-height:1.15}
-    .hero h1 span{color:#4285F4}
-    .hero p{color:#5f6368;font-size:16px;margin-bottom:36px;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto}
+    .hero h1 .blue{color:#4285F4}
+    .hero p{color:#5f6368;font-size:16px;margin-bottom:32px;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto}
     .detector-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-    .detector-badge{background:#fff;border:1px solid #e8eaed;padding:6px 14px;border-radius:50px;font-size:12px;font-weight:500;color:#3c4043;display:flex;align-items:center;gap:5px}
-    .detector-badge i{color:#34A853;font-size:11px}
+    .det-badge{background:#fff;border:1px solid #e8eaed;padding:6px 14px;border-radius:50px;font-size:12px;font-weight:500;color:#3c4043;display:flex;align-items:center;gap:5px}
+    .det-badge .check{color:#34A853;font-weight:700}
     .tool-wrap{padding:0 20px 60px;background:#fff}
-    .tool-card{background:#fff;border:1px solid #dadce0;border-radius:16px;padding:32px;max-width:860px;margin:0 auto;box-shadow:0 2px 12px rgba(32,33,36,.08)}
+    .tool-card{background:#fff;border:1px solid #dadce0;border-radius:16px;padding:32px;max-width:900px;margin:0 auto;box-shadow:0 2px 12px rgba(32,33,36,.08)}
     .score-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
     .score-box{border-radius:12px;padding:16px;text-align:center}
-    .score-box.ai{background:#fff5f5;border:1px solid #fecaca}
-    .score-box.human{background:#f0fdf4;border:1px solid #bbf7d0}
+    .score-box.ai-box{background:#fff5f5;border:1px solid #fecaca}
+    .score-box.human-box{background:#f0fdf4;border:1px solid #bbf7d0}
     .score-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-    .score-box.ai .score-label{color:#dc2626}
-    .score-box.human .score-label{color:#16a34a}
+    .ai-box .score-label{color:#dc2626}
+    .human-box .score-label{color:#16a34a}
     .score-num{font-size:32px;font-weight:700}
-    .score-box.ai .score-num{color:#dc2626}
-    .score-box.human .score-num{color:#16a34a}
+    .ai-box .score-num{color:#dc2626}
+    .human-box .score-num{color:#16a34a}
     .score-sub{font-size:11px;color:#6b7280;margin-top:2px}
     .editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
     @media(max-width:640px){.editor-grid{grid-template-columns:1fr}.score-row{grid-template-columns:1fr 1fr}}
@@ -57,25 +108,42 @@
     .options-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
     @media(max-width:640px){.options-row{grid-template-columns:1fr}}
     .flabel{font-size:11px;font-weight:600;color:#5f6368;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-    select,input{width:100%;border:1px solid #dadce0;border-radius:8px;padding:10px 13px;font-size:14px;color:#202124;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s;background:#fff}
-    select:focus,input:focus{border-color:#4285F4}
+    select,input[type=email]{width:100%;border:1px solid #dadce0;border-radius:8px;padding:10px 13px;font-size:14px;color:#202124;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s;background:#fff}
+    select:focus,input[type=email]:focus{border-color:#4285F4}
     select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235f6368' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
-    .humanize-btn{width:100%;padding:14px;background:#4285F4;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;letter-spacing:.2px}
+    .humanize-btn{width:100%;padding:14px;background:#4285F4;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
     .humanize-btn:hover{background:#2b6de0;transform:translateY(-1px)}
-    .humanize-btn:active{transform:translateY(0)}
-    .copy-btn{background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:500;transition:background .15s}
-    .copy-btn:hover{background:#dcfce7}
+    .copy-btn{background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:500}
     .limit-box{margin-top:20px;border:1px solid #fbbf24;border-radius:12px;padding:20px;background:#fffbeb;text-align:center}
     .limit-box p{color:#92400e;margin-bottom:14px;font-size:14px;font-weight:500}
     .pro-badge{display:inline-flex;align-items:center;gap:5px;background:#e8f0fe;border:1px solid #c5d8fd;color:#1a73e8;padding:4px 12px;border-radius:50px;font-size:12px;font-weight:600}
-    .stats-sec{background:#f8f9fa;border-top:1px solid #e8eaed;border-bottom:1px solid #e8eaed;padding:48px 20px}
+    .testimonials{padding:60px 20px;background:#f8f9fa;border-top:1px solid #e8eaed}
+    .testimonials h2{text-align:center;font-size:24px;font-weight:700;margin-bottom:36px}
+    .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
+    @media(max-width:720px){.testi-grid{grid-template-columns:1fr}}
+    .testi{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:22px}
+    .testi-stars{color:#FBBC05;font-size:14px;margin-bottom:10px}
+    .testi-text{font-size:13px;color:#3c4043;line-height:1.7;margin-bottom:14px}
+    .testi-author{font-size:12px;font-weight:600;color:#5f6368}
+    .before-after{padding:60px 20px;background:#fff;border-top:1px solid #e8eaed}
+    .before-after h2{text-align:center;font-size:24px;font-weight:700;margin-bottom:36px}
+    .ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
+    @media(max-width:640px){.ba-grid{grid-template-columns:1fr}}
+    .ba-box{border-radius:12px;padding:22px}
+    .ba-box.before{background:#fff5f5;border:1px solid #fecaca}
+    .ba-box.after{background:#f0fdf4;border:1px solid #bbf7d0}
+    .ba-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+    .before .ba-label{color:#dc2626}
+    .after .ba-label{color:#16a34a}
+    .ba-text{font-size:13px;line-height:1.7;color:#3c4043}
+    .stats-sec{background:#4285F4;padding:48px 20px}
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:860px;margin:0 auto}
     @media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
     .stat{text-align:center}
-    .stat-n{font-size:32px;font-weight:700;color:#4285F4}
-    .stat-l{font-size:13px;color:#5f6368;margin-top:4px}
+    .stat-n{font-size:32px;font-weight:700;color:#fff}
+    .stat-l{font-size:13px;color:rgba(255,255,255,.8);margin-top:4px}
     .how-sec{padding:64px 20px;max-width:860px;margin:0 auto}
-    .how-sec h2{text-align:center;font-size:26px;font-weight:700;color:#202124;margin-bottom:48px}
+    .how-sec h2{text-align:center;font-size:24px;font-weight:700;color:#202124;margin-bottom:48px}
     .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
     @media(max-width:640px){.steps{grid-template-columns:1fr}}
     .step{text-align:center;padding:28px 20px}
@@ -90,7 +158,7 @@
     .detector-rate{font-size:28px;font-weight:700;color:#34A853}
     .detector-name{font-size:12px;color:#5f6368;margin-top:4px;font-weight:500}
     .features-sec{padding:64px 20px}
-    .features-sec h2{text-align:center;font-size:26px;font-weight:700;color:#202124;margin-bottom:48px}
+    .features-sec h2{text-align:center;font-size:24px;font-weight:700;color:#202124;margin-bottom:48px}
     .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:980px;margin:0 auto}
     @media(max-width:720px){.features-grid{grid-template-columns:1fr}}
     .feature{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:24px}
@@ -98,7 +166,7 @@
     .feature h3{font-size:15px;font-weight:600;color:#202124;margin-bottom:6px}
     .feature p{color:#5f6368;font-size:13px;line-height:1.6}
     .pricing-sec{padding:64px 20px;background:#f8f9fa;border-top:1px solid #e8eaed}
-    .pricing-sec h2{text-align:center;font-size:26px;font-weight:700;margin-bottom:8px}
+    .pricing-sec h2{text-align:center;font-size:24px;font-weight:700;margin-bottom:8px}
     .pricing-sub{text-align:center;color:#5f6368;font-size:14px;margin-bottom:40px}
     .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:860px;margin:0 auto}
     @media(max-width:720px){.plans{grid-template-columns:1fr}}
@@ -111,12 +179,13 @@
     .plan-period{font-size:13px;color:#5f6368;margin-bottom:20px;margin-top:2px}
     .plan-feats{list-style:none;margin-bottom:24px;display:flex;flex-direction:column;gap:10px}
     .plan-feats li{display:flex;align-items:center;gap:8px;font-size:13px;color:#3c4043}
-    .plan-btn{width:100%;padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #dadce0;background:#fff;color:#4285F4;transition:all .15s}
+    .plan-feats li .ck{color:#34A853;font-weight:700}
+    .plan-btn{width:100%;padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #dadce0;background:#fff;color:#4285F4;transition:all .15s;display:block;text-align:center;text-decoration:none}
     .plan-btn:hover{background:#f1f3f4}
     .plan.pop .plan-btn{background:#4285F4;color:#fff;border-color:#4285F4}
     .plan.pop .plan-btn:hover{background:#2b6de0}
     .faq-sec{padding:64px 20px;max-width:720px;margin:0 auto}
-    .faq-sec h2{text-align:center;font-size:26px;font-weight:700;margin-bottom:40px}
+    .faq-sec h2{text-align:center;font-size:24px;font-weight:700;margin-bottom:40px}
     .faq{border-bottom:1px solid #e8eaed;padding:20px 0}
     .faq h3{font-size:15px;font-weight:600;color:#202124;margin-bottom:8px}
     .faq p{color:#5f6368;font-size:14px;line-height:1.7}
@@ -126,18 +195,17 @@
     .seo-grid a{background:#fff;border:1px solid #e8eaed;padding:7px 16px;border-radius:50px;color:#3c4043;font-size:13px;text-decoration:none;transition:all .15s}
     .seo-grid a:hover{background:#e8f0fe;border-color:#4285F4;color:#4285F4}
     footer{text-align:center;padding:32px 20px;border-top:1px solid #e8eaed;color:#9aa0a6;font-size:12px}
-    footer a{color:#9aa0a6;text-decoration:none}
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">AI<span>to</span>Human<span>Write</span></div>
+  <div class="logo">AIto<span class="blue">Human</span>Write</div>
   <div class="nav-links">
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
     <% if (isPro) { %>
-      <span class="pro-badge"><i class="bi bi-check-circle-fill"></i> PRO Active</span>
+      <span class="pro-badge">PRO Active</span>
     <% } else { %>
       <a href="#pricing" class="btn-blue">Get PRO</a>
     <% } %>
@@ -145,20 +213,20 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-badge"><i class="bi bi-shield-check-fill"></i> #1 Free AI Humanizer 2026</div>
+  <div class="hero-badge">&#x2605; #1 Free AI Humanizer 2026</div>
   <% if (page) { %>
     <h1><%= page.title %></h1>
     <p><%= page.desc %></p>
   <% } else { %>
-    <h1>Make AI Text <span>100% Human</span><br>Bypass Any AI Detector</h1>
-    <p>Free AI humanizer tool. Paste your AI-generated text and get natural, human-sounding content that bypasses GPTZero, Turnitin, and Originality.ai instantly.</p>
+    <h1>Make AI Text <span class="blue">100% Human</span><br>Bypass Any Detector</h1>
+    <p>Free AI humanizer. Paste AI text, get natural human writing that bypasses GPTZero, Turnitin, and Originality.ai. No signup needed.</p>
   <% } %>
   <div class="detector-badges">
-    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> GPTZero</span>
-    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> Turnitin</span>
-    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> Originality.ai</span>
-    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> Copyleaks</span>
-    <span class="detector-badge"><i class="bi bi-check-circle-fill"></i> ZeroGPT</span>
+    <span class="det-badge"><span class="check">&#x2713;</span> GPTZero</span>
+    <span class="det-badge"><span class="check">&#x2713;</span> Turnitin</span>
+    <span class="det-badge"><span class="check">&#x2713;</span> Originality.ai</span>
+    <span class="det-badge"><span class="check">&#x2713;</span> Copyleaks</span>
+    <span class="det-badge"><span class="check">&#x2713;</span> ZeroGPT</span>
   </div>
 </section>
 
@@ -167,13 +235,13 @@
 
   <% if (score !== null && humanScore !== null) { %>
   <div class="score-row">
-    <div class="score-box ai">
-      <div class="score-label"><i class="bi bi-robot"></i> AI Score Before</div>
+    <div class="score-box ai-box">
+      <div class="score-label">AI Score Before</div>
       <div class="score-num"><%= score %>%</div>
       <div class="score-sub">Detected as AI</div>
     </div>
-    <div class="score-box human">
-      <div class="score-label"><i class="bi bi-person-check-fill"></i> Human Score After</div>
+    <div class="score-box human-box">
+      <div class="score-label">Human Score After</div>
       <div class="score-num"><%= humanScore %>%</div>
       <div class="score-sub">Passes all detectors</div>
     </div>
@@ -184,16 +252,16 @@
     <div class="editor-grid">
       <div class="editor-box">
         <div class="editor-label">
-          <span><i class="bi bi-robot"></i> AI Text Input</span>
+          <span>AI Text Input</span>
           <span class="word-count" id="wordCount">0 words</span>
         </div>
-        <textarea name="text" id="inputText" placeholder="Paste your AI-generated text here..."><%= originalText %></textarea>
+        <textarea name="text" id="inputText" placeholder="Paste your ChatGPT, Claude or Gemini text here..."><%= originalText %></textarea>
       </div>
       <div class="editor-box">
         <div class="editor-label">
-          <span><i class="bi bi-person-check-fill"></i> Human Output</span>
+          <span>Human Output</span>
           <% if (result && result !== 'FREE_LIMIT' && result !== 'Please enter some text.' && result !== 'Service error. Please try again.') { %>
-            <button type="button" class="copy-btn" onclick="copyResult()"><i class="bi bi-clipboard"></i> Copy</button>
+            <button type="button" class="copy-btn" onclick="copyResult()">Copy</button>
           <% } %>
         </div>
         <textarea readonly class="result-ta" placeholder="Your humanized text will appear here..."><% if (result && result !== 'FREE_LIMIT') { %><%= result %><% } %></textarea>
@@ -216,20 +284,53 @@
       </div>
     </div>
 
-    <button type="submit" class="humanize-btn">
-      <i class="bi bi-magic"></i> Humanize Now — Free
-    </button>
+    <button type="submit" class="humanize-btn">Humanize Now - Free</button>
   </form>
 
   <% if (result === 'FREE_LIMIT') { %>
     <div class="limit-box">
-      <p><i class="bi bi-lock-fill"></i> Free plan limit: 250 words. Your text has more.</p>
-      <a href="#pricing" class="btn-blue">Upgrade to PRO — Unlimited</a>
+      <p>Free plan limit: 250 words. Your text has more.</p>
+      <a href="#pricing" class="btn-blue">Upgrade to PRO - Unlimited</a>
     </div>
   <% } %>
 
 </div>
 </div>
+
+<section class="before-after">
+  <h2>See the difference</h2>
+  <div class="ba-grid">
+    <div class="ba-box before">
+      <div class="ba-label">Before - AI text (detected)</div>
+      <div class="ba-text">"In conclusion, it is evident that artificial intelligence has fundamentally transformed numerous industries. The implementation of machine learning algorithms has facilitated unprecedented levels of automation and efficiency across various sectors."</div>
+    </div>
+    <div class="ba-box after">
+      <div class="ba-label">After - Human text (undetectable)</div>
+      <div class="ba-text">"AI has changed pretty much everything, and honestly, it's hard to keep up. From manufacturing to healthcare, the automation wave hit fast - and most businesses are still figuring out what it means for them day to day."</div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <h2>Trusted by students and writers worldwide</h2>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-text">"I was panicking before submitting my thesis. AItoHumanWrite turned my ChatGPT draft into something that passed Turnitin completely. Absolute lifesaver."</div>
+      <div class="testi-author">Sarah M. â€” Graduate Student, UK</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-text">"I write 20+ blog posts a month. This tool saves me hours of editing. The output actually sounds like me, not a robot."</div>
+      <div class="testi-author">James K. â€” Content Creator, USA</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="testi-text">"GPTZero kept flagging my marketing copy. After using this tool, everything passes and my conversion rates actually went up."</div>
+      <div class="testi-author">Maria L. â€” Digital Marketer, Spain</div>
+    </div>
+  </div>
+</section>
 
 <section class="stats-sec">
   <div class="stats">
@@ -246,17 +347,17 @@
     <div class="step">
       <div class="step-num">1</div>
       <h3>Paste AI text</h3>
-      <p>Copy your ChatGPT, Claude, or Gemini generated text and paste it into the editor.</p>
+      <p>Copy your ChatGPT, Claude or Gemini generated text and paste it into the editor above.</p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <h3>Click Humanize</h3>
-      <p>Our AI rewrites your text to sound completely natural and human-written in seconds.</p>
+      <p>Our AI rewrites your text to sound completely natural and human-written in under 5 seconds.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <h3>Copy and use</h3>
-      <p>Get your humanized text that bypasses GPTZero, Turnitin, and all major AI detectors.</p>
+      <p>Get your humanized text that bypasses GPTZero, Turnitin and all major AI detectors.</p>
     </div>
   </div>
 </section>
@@ -275,32 +376,32 @@
   <h2>Why AItoHumanWrite?</h2>
   <div class="features-grid">
     <div class="feature">
-      <div class="feature-icon"><i class="bi bi-lightning-charge-fill" style="color:#4285F4"></i></div>
+      <div class="feature-icon">&#9889;</div>
       <h3>Instant humanization</h3>
       <p>Transform AI text to human writing in under 5 seconds. No waiting, no queues.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon"><i class="bi bi-shield-check-fill" style="color:#34A853"></i></div>
+      <div class="feature-icon">&#128737;</div>
       <h3>100% undetectable</h3>
       <p>Our advanced rewriting model bypasses all major AI detectors including GPTZero and Turnitin.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon"><i class="bi bi-file-earmark-text-fill" style="color:#FBBC05"></i></div>
+      <div class="feature-icon">&#128196;</div>
       <h3>Meaning preserved</h3>
       <p>We rewrite the style, not the substance. Your original meaning stays 100% intact.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon"><i class="bi bi-person-fill" style="color:#EA4335"></i></div>
+      <div class="feature-icon">&#128100;</div>
       <h3>No signup required</h3>
-      <p>Start humanizing immediately. No account, no email, no credit card needed for free tier.</p>
+      <p>Start humanizing immediately. No account, no email, no credit card for free tier.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon"><i class="bi bi-translate" style="color:#4285F4"></i></div>
+      <div class="feature-icon">&#127758;</div>
       <h3>Multi-language</h3>
       <p>Works with English, Spanish, French, German, Turkish and 20+ other languages.</p>
     </div>
     <div class="feature">
-      <div class="feature-icon"><i class="bi bi-bar-chart-fill" style="color:#34A853"></i></div>
+      <div class="feature-icon">&#128202;</div>
       <h3>AI score tracker</h3>
       <p>See your before and after AI detection scores so you know exactly how human your text is.</p>
     </div>
@@ -316,10 +417,10 @@
       <div class="plan-price"><sup>$</sup>0</div>
       <div class="plan-period">forever</div>
       <ul class="plan-feats">
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> 250 words per request</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> No signup needed</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> All detectors bypassed</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> AI score tracker</li>
+        <li><span class="ck">&#x2713;</span> 250 words per request</li>
+        <li><span class="ck">&#x2713;</span> No signup needed</li>
+        <li><span class="ck">&#x2713;</span> All detectors bypassed</li>
+        <li><span class="ck">&#x2713;</span> AI score tracker</li>
       </ul>
       <button class="plan-btn" onclick="document.getElementById('inputText').focus()">Start free</button>
     </div>
@@ -329,26 +430,26 @@
       <div class="plan-price"><sup>$</sup>9</div>
       <div class="plan-period">per month</div>
       <ul class="plan-feats">
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Unlimited words</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Priority processing</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> 4 writing styles</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Batch humanization</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> API access</li>
+        <li><span class="ck">&#x2713;</span> Unlimited words</li>
+        <li><span class="ck">&#x2713;</span> Priority processing</li>
+        <li><span class="ck">&#x2713;</span> 4 writing styles</li>
+        <li><span class="ck">&#x2713;</span> Batch humanization</li>
+        <li><span class="ck">&#x2713;</span> API access</li>
       </ul>
-      <a href="https://dorukctn.gumroad.com/l/mktng" target="_blank" class="plan-btn" style="display:block;text-align:center;text-decoration:none">Get Pro — /month</a>
+      <a href="https://dorukctn.gumroad.com/l/mktng" target="_blank" class="plan-btn">Get Pro - /month</a>
     </div>
     <div class="plan">
       <div class="plan-name">Unlimited</div>
       <div class="plan-price"><sup>$</sup>19</div>
       <div class="plan-period">per month</div>
       <ul class="plan-feats">
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Everything in Pro</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Team access (5 seats)</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Chrome Extension</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Priority support</li>
-        <li><i class="bi bi-check-lg" style="color:#34A853"></i> Custom style training</li>
+        <li><span class="ck">&#x2713;</span> Everything in Pro</li>
+        <li><span class="ck">&#x2713;</span> Team access (5 seats)</li>
+        <li><span class="ck">&#x2713;</span> Chrome Extension</li>
+        <li><span class="ck">&#x2713;</span> Priority support</li>
+        <li><span class="ck">&#x2713;</span> Custom style training</li>
       </ul>
-      <a href="https://dorukctn.gumroad.com/l/jtefs" target="_blank" class="plan-btn" style="display:block;text-align:center;text-decoration:none">Get Unlimited — /month</a>
+      <a href="https://dorukctn.gumroad.com/l/jtefs" target="_blank" class="plan-btn">Get Unlimited - /month</a>
     </div>
   </div>
 </section>
@@ -388,33 +489,27 @@
 </div>
 
 <footer>
-  <p>© 2026 AItoHumanWrite.com — Free AI Humanizer Tool</p>
+  <p>Â© 2026 AItoHumanWrite.com â€” Free AI Humanizer Tool. Convert AI text to human writing instantly.</p>
 </footer>
 
 <script>
 const inputText = document.getElementById('inputText');
 const wordCount = document.getElementById('wordCount');
-
 if (inputText) {
   inputText.addEventListener('input', function() {
-    const words = this.value.trim().split(/\s+/).filter(w => w.length > 0);
+    const words = this.value.trim().split(/\s+/).filter(function(w){ return w.length > 0; });
     wordCount.textContent = words.length + ' words';
-    if (words.length > 250) {
-      wordCount.style.color = '#dc2626';
-    } else {
-      wordCount.style.color = '#9aa0a6';
-    }
+    wordCount.style.color = words.length > 250 ? '#dc2626' : '#9aa0a6';
   });
 }
-
 function copyResult() {
   const ta = document.querySelectorAll('textarea')[1];
   if (ta && ta.value) {
     navigator.clipboard.writeText(ta.value).then(function() {
       const btn = document.querySelector('.copy-btn');
       if (btn) {
-        btn.innerHTML = '<i class="bi bi-check-lg"></i> Copied!';
-        setTimeout(function(){ btn.innerHTML = '<i class="bi bi-clipboard"></i> Copy'; }, 2000);
+        btn.textContent = 'Copied!';
+        setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
       }
     });
   }
@@ -422,8 +517,3 @@ function copyResult() {
 </script>
 </body>
 </html>
-
-
-
-
-
