@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
@@ -99,5 +99,6 @@ app.get('/pro', (req, res) => {
   res.redirect('/');
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => console.log('aitohumanwrite running on ' + PORT));
+
