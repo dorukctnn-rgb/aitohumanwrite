@@ -29,6 +29,10 @@ Object.keys(SEO_PAGES).forEach(slug => {
   });
 });
 
+app.get('/ai-to-human-text-converter-free', (req, res) => {
+  res.redirect(301, '/');
+});
+
 app.get('/', (req, res) => {
   const isPro = req.cookies.pro === 'true';
   res.render('index', { result: null, originalText: '', score: null, humanScore: null, isPro, page: null });
@@ -101,4 +105,5 @@ app.get('/pro', (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => console.log('aitohumanwrite running on ' + PORT));
+
 
