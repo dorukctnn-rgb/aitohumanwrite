@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
@@ -31,6 +31,10 @@ app.get('/sitemap.xml', (req, res) => {
   xml += '<url><loc>https://aitohumanwrite.com/bloggers</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/marketing</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/seo</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/how-to-bypass-gptZero</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/does-turnitin-detect-chatgpt</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/best-free-ai-humanizer-tools</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
   xml += '</urlset>';
   res.send(xml);
 });
@@ -124,3 +128,20 @@ app.get('/pro', (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => console.log('aitohumanwrite running on ' + PORT));
+
+app.get('/blog', (req, res) => {
+  res.render('blog-index', {});
+});
+
+app.get('/blog/how-to-bypass-gptZero', (req, res) => {
+  res.render('blog-gptZero', {});
+});
+
+app.get('/blog/does-turnitin-detect-chatgpt', (req, res) => {
+  res.render('blog-turnitin', {});
+});
+
+app.get('/blog/best-free-ai-humanizer-tools', (req, res) => {
+  res.render('blog-humanizer-tools', {});
+});
+
