@@ -35,6 +35,9 @@ app.get('/sitemap.xml', (req, res) => {
   xml += '<url><loc>https://aitohumanwrite.com/blog/how-to-bypass-gptZero</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/blog/does-turnitin-detect-chatgpt</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/blog/best-free-ai-humanizer-tools</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/is-my-essay-ai-generated</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/chatgpt-essay-detector</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/free-turnitin-checker</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
   xml += '</urlset>';
   res.send(xml);
 });
@@ -143,5 +146,18 @@ app.get('/blog/does-turnitin-detect-chatgpt', (req, res) => {
 
 app.get('/blog/best-free-ai-humanizer-tools', (req, res) => {
   res.render('blog-humanizer-tools', {});
+});
+
+
+app.get('/blog/is-my-essay-ai-generated', (req, res) => {
+  res.render('blog-essay-check', {});
+});
+
+app.get('/blog/chatgpt-essay-detector', (req, res) => {
+  res.render('blog-chatgpt-detector', {});
+});
+
+app.get('/blog/free-turnitin-checker', (req, res) => {
+  res.render('blog-turnitin-checker', {});
 });
 
