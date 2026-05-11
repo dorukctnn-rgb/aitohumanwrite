@@ -31,6 +31,8 @@ app.get('/sitemap.xml', (req, res) => {
   xml += '<url><loc>https://aitohumanwrite.com/bloggers</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/marketing</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/seo</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/make-chatgpt-text-undetectable</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/humanize-ai-text-for-business</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/blog/how-to-bypass-gptZero</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/blog/does-turnitin-detect-chatgpt</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
@@ -159,5 +161,22 @@ app.get('/blog/chatgpt-essay-detector', (req, res) => {
 
 app.get('/blog/free-turnitin-checker', (req, res) => {
   res.render('blog-turnitin-checker', {});
+});
+
+
+app.get('/make-chatgpt-text-undetectable', (req, res) => {
+  const isPro = req.cookies.pro === 'true';
+  res.render('index', { result: null, originalText: '', score: null, humanScore: null, isPro, page: {
+    title: 'Make ChatGPT Text Undetectable',
+    desc: 'Make your ChatGPT text 100% undetectable instantly. Bypass GPTZero, Turnitin and Originality.ai. Free, no signup needed.'
+  }});
+});
+
+app.get('/humanize-ai-text-for-business', (req, res) => {
+  const isPro = req.cookies.pro === 'true';
+  res.render('index', { result: null, originalText: '', score: null, humanScore: null, isPro, page: {
+    title: 'Humanize AI Text for Business',
+    desc: 'Make AI-generated business content sound natural and human. Perfect for marketing copy, emails and reports. Free to try.'
+  }});
 });
 
