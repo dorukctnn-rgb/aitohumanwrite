@@ -1,14 +1,6 @@
 ﻿{
   "version": 2,
-  "builds": [
-    { "src": "server.js", "use": "@vercel/node" },
-    { "src": "public/**", "use": "@vercel/static" },
-    { "src": "views/**", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/public/(.*)", "dest": "/public/$1" },
-    { "src": "/favicon.svg", "dest": "/public/favicon.svg" },
-    { "src": "/og-image.png", "dest": "/public/og-image.png" },
-    { "src": "/(.*)", "dest": "/server.js" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/server.js" }
   ]
 }
