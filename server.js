@@ -170,16 +170,16 @@ app.get('/blog/free-turnitin-checker', (req, res) => {
 app.get('/make-chatgpt-text-undetectable', (req, res) => {
   const isPro = req.cookies.pro === 'true';
   res.render('index', { result: null, originalText: '', score: null, humanScore: null, isPro, page: {
-    title: 'Make ChatGPT Text Undetectable',
-    desc: 'Make your ChatGPT text 100% undetectable instantly. Bypass GPTZero, Turnitin and Originality.ai. Free, no signup needed.'
+    title: 'Make ChatGPT Undetectable in 5 Seconds (Free, 2026)',
+    desc: '★ #1 Free tool to make ChatGPT text 100% undetectable. Bypass GPTZero, Turnitin, Originality.ai in seconds. No signup. Try free.'
   }});
 });
 
 app.get('/humanize-ai-text-for-business', (req, res) => {
   const isPro = req.cookies.pro === 'true';
   res.render('index', { result: null, originalText: '', score: null, humanScore: null, isPro, page: {
-    title: 'Humanize AI Text for Business',
-    desc: 'Make AI-generated business content sound natural and human. Perfect for marketing copy, emails and reports. Free to try.'
+    title: 'Humanize AI Text for Business — Free Tool (2026)',
+    desc: 'Free tool ★ Humanize AI marketing copy, emails, reports in 5 seconds. Sound natural, bypass AI detectors. No signup required.'
   }});
 });
 
