@@ -131,8 +131,11 @@ app.get('/pro', (req, res) => {
   res.redirect('/');
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, '0.0.0.0', () => console.log('aitohumanwrite running on ' + PORT));
+if (require.main === module) {
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, '0.0.0.0', () => console.log('aitohumanwrite running on ' + PORT));
+}
+module.exports = app;
 
 app.get('/blog', (req, res) => {
   res.render('blog-index', {});
@@ -179,4 +182,5 @@ app.get('/humanize-ai-text-for-business', (req, res) => {
     desc: 'Make AI-generated business content sound natural and human. Perfect for marketing copy, emails and reports. Free to try.'
   }});
 });
+
 
