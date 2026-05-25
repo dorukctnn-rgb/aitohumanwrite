@@ -40,6 +40,9 @@ app.get('/sitemap.xml', (req, res) => {
   xml += '<url><loc>https://aitohumanwrite.com/blog/is-my-essay-ai-generated</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/blog/chatgpt-essay-detector</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
   xml += '<url><loc>https://aitohumanwrite.com/blog/free-turnitin-checker</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>';
+    xml += '<url><loc>https://aitohumanwrite.com/blog/how-to-get-past-turnitin-ai</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/ai-to-human-rewriter</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>';
+  xml += '<url><loc>https://aitohumanwrite.com/blog/ai-to-human-text-converter</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>';
   xml += '</urlset>';
   res.send(xml);
 });
@@ -129,6 +132,34 @@ app.post('/webhook', (req, res) => {
 app.get('/pro', (req, res) => {
   res.cookie('pro', 'true', { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
   res.redirect('/');
+});
+
+
+
+app.get('/blog/how-to-get-past-turnitin-ai', (req, res) => {
+  res.render('blog-past-turnitin', {});
+});
+
+app.get('/blog/ai-to-human-rewriter', (req, res) => {
+  res.render('blog-rewriter', {});
+});
+
+app.get('/blog/ai-to-human-text-converter', (req, res) => {
+  res.render('blog-converter', {});
+});
+
+
+
+app.get('/blog/how-to-get-past-turnitin-ai', (req, res) => {
+  res.render('blog-past-turnitin', {});
+});
+
+app.get('/blog/ai-to-human-rewriter', (req, res) => {
+  res.render('blog-rewriter', {});
+});
+
+app.get('/blog/ai-to-human-text-converter', (req, res) => {
+  res.render('blog-converter', {});
 });
 
 if (require.main === module) {
