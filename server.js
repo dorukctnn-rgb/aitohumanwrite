@@ -162,6 +162,12 @@ app.get('/blog/ai-to-human-text-converter', (req, res) => {
   res.render('blog-converter', {});
 });
 
+
+// Eski olu URL'leri ana sayfaya yonlendir (404 temizligi)
+app.get('/SENIN_LEMON_PREMIUM_LINKIN', (req, res) => res.redirect(301, '/'));
+app.get('/humanize-ai-text-for-marketing', (req, res) => res.redirect(301, '/humanize-ai-text-for-business'));
+app.get('/ai-to-human-text-converter-free', (req, res) => res.redirect(301, '/blog/ai-to-human-text-converter'));
+
 if (require.main === module) {
   const PORT = process.env.PORT || 8080;
   app.listen(PORT, '0.0.0.0', () => console.log('aitohumanwrite running on ' + PORT));
