@@ -13,6 +13,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+// Vercel subdomain ve www'yu ana domaine 301 yonlendir (duplicate icerik onleme)
+app.use((req, res, next) => {
+  const host = req.headers.host || '';
+  if (host.includes('vercel.app') || host.startsWith('www.')) {
+    return res.redirect(301, 'https://aitohumanwrite.com' + req.originalUrl);
+  }
+  next();
+});
+
+
+
 const users = {};
 
 const SEO_PAGES = {
